@@ -18,6 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { updatePostTitle } from "@/lib/server-actions/posts";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface TitleFormProps {
   initialTitle: string;
@@ -66,53 +67,55 @@ export const TitleForm = ({ initialTitle, postId }: TitleFormProps) => {
   };
 
   return (
-    <div className="bg-white rounded-md p-4 dark:bg-gray-800">
-      <div className="font-medium flex items-center justify-between">
-        <span className="text-2xl">Title</span>
+    <Card className="bg-white dark:bg-gray-800">
+      <CardHeader className="font-medium flex items-center justify-between">
+        <CardTitle className="text-2xl">Title</CardTitle>
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>
           ) : (
             <>
-              <Pencil className="h-4 w-4 mr-2" />
-              Edit title
+              <Pencil />
+              Edit
             </>
           )}
         </Button>
-      </div>
-      {!isEditing && (
-        <p className="text-sm mt-2 dark:text-gray-300">{initialTitle}</p>
-      )}
-      {isEditing && (
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(submit)}
-            className="space-y-4 mt-4 dark:text-gray-300"
-          >
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      disabled={isSubmitting}
-                      placeholder="e.g. 'Advanced web development'"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className="flex justify-end">
-              <Button disabled={!isValid || isSubmitting} type="submit">
-                Save
-              </Button>
-            </div>
-          </form>
-        </Form>
-      )}
-    </div>
+      </CardHeader>
+      <CardContent>
+        {!isEditing && (
+          <p className="text-sm dark:text-gray-300">{initialTitle}</p>
+        )}
+        {isEditing && (
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(submit)}
+              className=" dark:text-gray-300"
+            >
+              <FormField
+                control={form.control}
+                name="title"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        disabled={isSubmitting}
+                        placeholder="e.g. 'Advanced web development'"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="flex justify-end mt-2">
+                <Button disabled={!isValid || isSubmitting} type="submit">
+                  Save
+                </Button>
+              </div>
+            </form>
+          </Form>
+        )}
+      </CardContent>
+    </Card>
   );
 };

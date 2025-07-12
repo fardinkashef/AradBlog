@@ -7,7 +7,7 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="h-full bg-gray-50">
+    <div className="h-screen flex flex-col bg-gray-50">
       <Navbar />
       {children}
       <PageViewTracker />

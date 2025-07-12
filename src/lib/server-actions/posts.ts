@@ -188,45 +188,56 @@ export async function updatePostPublishStatus(
     throw error;
   }
 }
-//* Updating functions 👆:
-
-//* Deleting functions 👇:
-export async function deletePost(postId: string) {
+export async function updatePostYouTubeVideoId(
+  postId: string,
+  newVideoId: string
+) {
   let post;
   try {
     await connectToDatabase();
     post = await Post.findById(postId);
   } catch (error) {
-    console.log("This error happened while deleting the data:", error);
+    console.log("This error happened while updating the data:", error);
     throw error;
   }
 
   if (!post) {
-    const error = new Error("Could not find cPosts for this id.");
+    const error = new Error("Could not find a post for this id.");
     throw error;
   }
 
   try {
-    // First, delete post data object in database
-    await post.deleteOne();
-    // Next, delete post image in file system
-    await deletePostImage(postId);
-    // revalidatePath("/data");
+    post.youtubeVideoId = newVideoId;
+    await post.save();
   } catch (error) {
-    console.log("This error happened while deleting the data:", error);
+    console.log("This error happened while updating the data:", error);
     throw error;
   }
 }
-export async function deletePostImage(postId: string) {
+//* Updating functions 👆:
+
+//* Deleting functions 👇:
+
+export async function deletePostVideo(postId: string) {
+  let post;
   try {
-    await fetch("/api/posts/delete-image", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ postId }),
-    });
+    await connectToDatabase();
+    post = await Post.findById(postId);
   } catch (error) {
-    console.log("This error happend while deleting post image:", error);
+    console.log("This error happened while updating the data:", error);
+    throw error;
+  }
+
+  if (!post) {
+    const error = new Error("Could not find a post for this id.");
+    throw error;
+  }
+
+  try {
+    post.youtubeVideoId = undefined;
+    await post.save();
+  } catch (error) {
+    console.log("This error happened while updating the data:", error);
+    throw error;
   }
 }

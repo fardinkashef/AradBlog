@@ -1,6 +1,7 @@
 import { getPostById } from "@/lib/server-actions/posts";
 import Image from "next/image";
 import { redirect } from "next/navigation";
+import YouTubeVideo from "./_components/YouTubeVideo";
 
 type PostPreviewPageProps = {
   params: Promise<{ postId: string }>;
@@ -25,6 +26,7 @@ export default async function PostPreviewPage({
         className="p-3 max-w-2xl mx-auto w-full post-content"
         dangerouslySetInnerHTML={{ __html: post?.content }}
       ></div>
+      {post.youtubeVideoId && <YouTubeVideo videoId={post.youtubeVideoId} />}
     </div>
   );
 }

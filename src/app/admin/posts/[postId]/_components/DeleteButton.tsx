@@ -10,20 +10,33 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { deletePost } from "@/lib/server-actions/posts";
 import { X } from "lucide-react";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 export default function DeleteButton({ postId }: { postId: string }) {
+  const router = useRouter();
   const handleDeletePost = async () => {
-    await deletePost(postId);
-    toast.success("Post deleted successfully");
+    try {
+      await fetch("/api/posts/delete-post", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ postId }),
+      });
+      toast.success("Post deleted successfully");
+      router.push("/admin/posts");
+    } catch (error) {
+      console.log("This error happend while deleting the post:", error);
+      toast.error("An error happened while deleting the post");
+    }
   };
   return (
     <Dialog>
       <form>
         <DialogTrigger asChild>
-          <Button variant="outline">
+          <Button variant="outline" className="text-red-600">
             <X className="w-4 h-4 mr-2" />
             Delete
           </Button>

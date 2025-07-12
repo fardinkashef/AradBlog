@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const pageViewSchema = new mongoose.Schema({
+const viewSchema = new mongoose.Schema({
   postId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Post",
@@ -15,6 +15,5 @@ const pageViewSchema = new mongoose.Schema({
 });
 
 // Ensure the model is not re-registered in development mode
-const PageView =
-  mongoose.models.PageView || mongoose.model("PageView", pageViewSchema);
-export default PageView;
+const View = mongoose.models.View || mongoose.model("View", viewSchema);
+export default View;

@@ -3,6 +3,9 @@ export type post = {
   excerpt: string;
   content: string;
   imageSrc: string;
+  // fileName?: string;
+  attachments: string[]; // The names of the attached files(.e.g ['article.pdf' , 'photo.jpg'])
+  youtubeVideoId?: string;
   isPublished: boolean;
   createdAt: Date;
   updatedAt: Date;

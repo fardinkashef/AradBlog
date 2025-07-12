@@ -1,12 +1,13 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { deletePostImage } from "@/lib/server-actions/posts";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import axios from "axios";
 import { Upload, ImageIcon, X } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
 
 type ImageUploadProps = {
   // The src of the image uploaded previously which we can delete and replace with a new one 👇:
@@ -57,32 +58,35 @@ export default function ImageUpload({ imageSrc, postId }: ImageUploadProps) {
     // }
   }, [imagePreviewUrl]);
   return (
-    <div className="w-full max-w-2xl rounded-lg bg-white p-4">
-      <div className="text-2xl font-medium mb-2">Image</div>
-
-      {imageSrc ? (
-        <ImageView imageSrc={imageSrc} postId={postId} />
-      ) : imagePreviewUrl && imageFile ? (
-        <ImagePreview
-          imagePreviewUrl={imagePreviewUrl}
-          postId={postId}
-          imageFile={imageFile}
-          setImageFile={setImageFile}
-          handleRemoveFile={handleRemoveFile}
-        />
-      ) : (
-        <ImageInputAndDrag
-          // setError={setError}
-          processImageFile={processImageFile}
-        />
-      )}
-      {/* Display Errors */}
-      {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 p-3 rounded">
-          {error}
-        </div>
-      )}
-    </div>
+    <Card className="bg-white dark:bg-gray-800">
+      <CardHeader className="font-medium flex items-center justify-start">
+        <CardTitle className="text-2xl">Image</CardTitle>
+      </CardHeader>
+      <CardContent>
+        {imageSrc ? (
+          <ImageView imageSrc={imageSrc} postId={postId} />
+        ) : imagePreviewUrl && imageFile ? (
+          <ImagePreview
+            imagePreviewUrl={imagePreviewUrl}
+            postId={postId}
+            imageFile={imageFile}
+            setImageFile={setImageFile}
+            handleRemoveFile={handleRemoveFile}
+          />
+        ) : (
+          <ImageInputAndDrag
+            // setError={setError}
+            processImageFile={processImageFile}
+          />
+        )}
+        {/* Display Errors */}
+        {error && (
+          <div className="bg-red-50 border border-red-200 text-red-700 p-3 rounded">
+            {error}
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 }
 
@@ -191,8 +195,20 @@ function ImageView({ imageSrc, postId }: { imageSrc: string; postId: string }) {
 
   const router = useRouter();
   const handleRemoveImage = async () => {
-    await deletePostImage(postId);
-    router.refresh();
+    try {
+      await fetch("/api/posts/delete-image", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ postId }),
+      });
+      toast.success("Post image deleted successfully");
+      router.refresh();
+    } catch (error) {
+      console.log("This error happend while deleting post image:", error);
+      toast.error("An error happend when removing image");
+    }
   };
 
   // Why I added this useEffect? The 'browser' would cach the image not Next.js because with useRouter.refresh method, Next.js would get fresh data. So I have to change the image src a little bit using search params and Date object, but this leads to a Hydration Error. The solution is to use a useEffect hook like this.

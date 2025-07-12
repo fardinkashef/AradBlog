@@ -6,6 +6,9 @@ const PostSchema = new Schema(
     excerpt: String,
     content: String,
     imageSrc: String,
+    // fileName: String,
+    attachments: { type: [String], default: [] },
+    youtubeVideoId: String,
     isPublished: {
       type: Boolean,
       default: false,

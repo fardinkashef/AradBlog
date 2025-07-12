@@ -1,6 +1,6 @@
 "use server";
 import { connectToDatabase } from "@/lib/database/db-connection";
-import PageView from "../database/models/PageView";
+import View from "../database/models/View";
 import {
   endOfMonth,
   // endOfWeek,
@@ -16,13 +16,13 @@ export async function createView(
 ) {
   try {
     await connectToDatabase();
-    // Create a new PageView document
-    const newPageView = new PageView({
+    // Create a new View document
+    const newView = new View({
       postId: postId || undefined, // Set if provided, otherwise undefined
       timestamp: new Date(), // Automatically set to current time
     });
 
-    await newPageView.save();
+    await newView.save();
 
     return { success: true, message: "View tracked successfully" };
   } catch (error) {
@@ -37,7 +37,7 @@ export async function createView(
 export async function getAllViews() {
   try {
     await connectToDatabase();
-    const totalSiteViews = await PageView.countDocuments({});
+    const totalSiteViews = await View.countDocuments({});
     return totalSiteViews;
   } catch (error) {
     console.log("This error happened while counting all views:", error);
@@ -48,7 +48,7 @@ export async function getThisWeekViews() {
     await connectToDatabase();
     const now = new Date();
     const startOfThisWeek = startOfWeek(now, { weekStartsOn: 1 }); // Monday as start of week
-    const viewsThisWeek = await PageView.countDocuments({
+    const viewsThisWeek = await View.countDocuments({
       timestamp: { $gte: startOfThisWeek },
     });
     return viewsThisWeek;
@@ -62,7 +62,7 @@ export async function getThisWeekViews() {
 //     const now = new Date();
 //     const startOfLastWeek = startOfWeek(subWeeks(now, 1), { weekStartsOn: 1 });
 //     const endOfLastWeek = endOfWeek(subWeeks(now, 1), { weekStartsOn: 1 });
-//     const viewsLastWeek = await PageView.countDocuments({
+//     const viewsLastWeek = await View.countDocuments({
 //       timestamp: { $gte: startOfLastWeek, $lte: endOfLastWeek },
 //     });
 //     return viewsLastWeek;
@@ -75,7 +75,7 @@ export async function getThisMonthViews() {
     await connectToDatabase();
     const now = new Date();
     const startOfThisMonth = startOfMonth(now);
-    const viewsThisMonth = await PageView.countDocuments({
+    const viewsThisMonth = await View.countDocuments({
       timestamp: { $gte: startOfThisMonth },
     });
     return viewsThisMonth;
@@ -89,7 +89,7 @@ export async function getLastMonthViews() {
     const now = new Date();
     const startOfLastMonth = startOfMonth(subMonths(now, 1));
     const endOfLastMonth = endOfMonth(subMonths(now, 1));
-    const viewsLastMonth = await PageView.countDocuments({
+    const viewsLastMonth = await View.countDocuments({
       timestamp: { $gte: startOfLastMonth, $lte: endOfLastMonth },
     });
     return viewsLastMonth;
@@ -101,7 +101,7 @@ export async function getLast30DaysDailyViews() {
   const now = new Date(); // Current date/time
   const thirtyDaysAgo = subDays(now, 29);
 
-  const rawDailyViews = await PageView.aggregate([
+  const rawDailyViews = await View.aggregate([
     {
       $match: {
         timestamp: { $gte: thirtyDaysAgo },

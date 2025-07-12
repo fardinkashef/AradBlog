@@ -1,4 +1,4 @@
-import logo from "../../../../public/logo.svg";
+import logo from "../../../../public/logo-dark.svg";
 import { LibraryBig, ChartNoAxesCombined, UserCog } from "lucide-react";
 import {
   Sidebar,
@@ -39,7 +39,7 @@ export default function AdminSideBar() {
         <SidebarGroup>
           <SidebarGroupLabel className="w-auto h-auto mb-6">
             <Link href="/">
-              <Image src={logo} alt="Logo" width={150} height={45} />
+              <Image src={logo} alt="Logo" width={150} height={50} />
             </Link>
           </SidebarGroupLabel>
           <SidebarGroupContent>

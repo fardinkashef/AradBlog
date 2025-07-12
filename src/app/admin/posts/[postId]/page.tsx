@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import PublishButton from "./_components/PublishButton";
 import DeleteButton from "./_components/DeleteButton";
+import YouTubeVideoInput from "./_components/YouTubeVideoInput";
+import FileUpload from "./_components/FileUpload";
 
 type PostPageProps = {
   params: Promise<{ postId: string }>;
@@ -45,7 +47,9 @@ export default async function PostPage({ params }: PostPageProps) {
       <TitleForm initialTitle={post.title} postId={postId} />
       <ExcerptForm initialExcerpt={post.excerpt || ""} postId={postId} />
       <ImageUpload imageSrc={post.imageSrc} postId={postId} />
+      <FileUpload attachments={post.attachments} postId={postId} />
       <ContentForm initialContent={post.content || ""} postId={postId} />
+      <YouTubeVideoInput youtubeVideoId={post.youtubeVideoId} postId={postId} />
     </div>
   );
 }

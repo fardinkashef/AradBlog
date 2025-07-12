@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { updatePostContent } from "@/lib/server-actions/posts";
 import { Pencil } from "lucide-react";
 import dynamic from "next/dynamic";
@@ -28,39 +29,41 @@ export default function ContentForm({
     toggleEdit();
   };
   return (
-    <div className="bg-white rounded-md p-4 dark:bg-gray-800">
-      <div className="font-medium flex items-center justify-between">
-        <span className="text-2xl">Content</span>
+    <Card className="bg-white dark:bg-gray-800">
+      <CardHeader className="font-medium flex items-center justify-between">
+        <CardTitle className="text-2xl">Content</CardTitle>
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>
           ) : (
             <>
-              <Pencil className="h-4 w-4 mr-2" />
-              Edit Content
+              <Pencil />
+              Edit
             </>
           )}
         </Button>
-      </div>
-      {isEditing ? (
-        <div>
-          <ReactQuill
-            theme="snow"
-            placeholder="Write something..."
-            className="h-72 mb-12"
-            value={value}
-            onChange={setValue}
-          />
-          <div className="flex justify-end">
-            <Button onClick={handleSaveContent}>Save Changes</Button>
+      </CardHeader>
+      <CardContent>
+        {isEditing ? (
+          <div>
+            <ReactQuill
+              theme="snow"
+              placeholder="Write something..."
+              className="h-72 mb-12"
+              value={value}
+              onChange={setValue}
+            />
+            <div className="flex justify-end">
+              <Button onClick={handleSaveContent}>Save Changes</Button>
+            </div>
           </div>
-        </div>
-      ) : (
-        <div
-          className="p-3 max-w-2xl mx-auto w-full post-content"
-          dangerouslySetInnerHTML={{ __html: value }}
-        ></div>
-      )}
-    </div>
+        ) : (
+          <div
+            className="p-3 max-w-2xl mx-auto w-full post-content"
+            dangerouslySetInnerHTML={{ __html: value }}
+          ></div>
+        )}
+      </CardContent>
+    </Card>
   );
 }

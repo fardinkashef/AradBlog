@@ -1,36 +1,41 @@
 import Link from "next/link";
 // import { sessionUser } from "@/lib/types";
 import NavBarMenuSheet from "./NavBarMenuSheet";
+import Image from "next/image";
 // import UserDropdown from "@/components/UserDropDown";
+import logo from "../../../public/logo.svg";
+import { cn } from "@/lib/utils";
+import NavLink from "./NavLink";
 
-const links = [
+const linkItems = [
   { title: "Blog", href: "/blog" },
+  { title: "Services", href: "/services" },
+  { title: "About", href: "/about" },
   { title: "Contact", href: "/contact" },
-  { title: "services", href: "/services" },
 ];
 export default function Navbar() {
   // { user }: { user: sessionUser }
   return (
-    <div className="flex justify-between items-center p-4 border-t-8 border-t-orange-500 border-b-2">
-      <Link
-        href="/"
-        className="text-black text-2xl font-bold p-2 rounded-md grow max-w-fit"
-      >
-        LOGO
+    <div className="flex justify-between items-center p-4 border-t-8 border-t-brand-dark border-b-2">
+      <Link href="/">
+        <Image src={logo} alt="Logo" width={200} height={60} />
       </Link>
       {/* // Weird behaviour: if I put the following NavBarMenuSheet element after the nav element, it won't show up!!! */}
       <NavBarMenuSheet
       // user={user}
       />
       <nav className="hidden pr-12 md:flex items-center gap-8 ">
-        {links.map((link, index) => (
-          <Link
-            href={link.href}
-            className="bg-orange-500 text-white p-2 rounded-md hover:bg-orange-700"
+        {linkItems.map((linkItem, index) => (
+          <NavLink
+            href={linkItem.href}
+            className={cn(
+              linkItem.title === "Contact" &&
+                "bg-brand-dark text-white rounded-md hover:border-b-brand-dark"
+            )}
             key={index}
           >
-            {link.title}
-          </Link>
+            {linkItem.title}
+          </NavLink>
         ))}
         {/* {user ? <UserDropdown user={user} /> : <Link href="/login">Login</Link>} */}
       </nav>

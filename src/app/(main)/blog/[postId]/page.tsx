@@ -2,6 +2,8 @@ import PostViewTracker from "@/components/PostViewTracker";
 import { getPostById } from "@/lib/server-actions/posts";
 import Image from "next/image";
 import { redirect } from "next/navigation";
+import YouTubeVideo from "./_components/YouTubeVideo";
+import FileDownloadLink from "./_components/FileDownloadLink";
 
 type BlogPostPageProps = {
   params: Promise<{ postId: string }>;
@@ -24,6 +26,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         className="p-3 max-w-2xl mx-auto w-full post-content"
         dangerouslySetInnerHTML={{ __html: post?.content }}
       ></div>
+      {/* {post.attachments.length > 0 && (
+        <FileDownloadLink fileName={post.fileName} />
+      )} */}
+      {post.youtubeVideoId && <YouTubeVideo videoId={post.youtubeVideoId} />}
       <PostViewTracker postId={postId} />
     </div>
   );
