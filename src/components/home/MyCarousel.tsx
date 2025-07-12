@@ -2,8 +2,6 @@
 
 import * as React from "react";
 import Autoplay from "embla-carousel-autoplay";
-
-import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
@@ -71,7 +69,7 @@ export default function MyCarousel() {
 
               <div className="relative bg-black/60 z-10 text-white w-full h-full">
                 <div className="container absolute top-1/2 sm:top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center p-4 md:p-8">
-                  <p className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight mb-3">
+                  <p className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight mb-6">
                     {item.title}
                   </p>
 

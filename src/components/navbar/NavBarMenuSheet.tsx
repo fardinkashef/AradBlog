@@ -4,16 +4,7 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import Link from "next/link";
-import {
-  Home,
-  Library,
-  LogIn,
-  Menu,
-  Phone,
-  HeartHandshake,
-  Info,
-} from "lucide-react";
+import { Home, Library, Menu, Phone, HeartHandshake, Info } from "lucide-react";
 import SheetLink from "./SheetLink";
 // import { sessionUser } from "@/lib/types";
 
