@@ -10,8 +10,8 @@ import SheetLink from "./SheetLink";
 
 const links = [
   { title: "Home", href: "/", icon: Home },
-  { title: "Blog", href: "/blog", icon: Library },
   { title: "Services", href: "/services", icon: HeartHandshake },
+  { title: "Blog", href: "/blog", icon: Library },
   { title: "About", href: "/about", icon: Info },
   { title: "Contact", href: "/contact", icon: Phone },
 ];

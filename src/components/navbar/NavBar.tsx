@@ -8,15 +8,15 @@ import { cn } from "@/lib/utils";
 import NavLink from "./NavLink";
 
 const linkItems = [
-  { title: "Blog", href: "/blog" },
   { title: "Services", href: "/services" },
+  { title: "Blog", href: "/blog" },
   { title: "About", href: "/about" },
   { title: "Contact", href: "/contact" },
 ];
 export default function Navbar() {
   // { user }: { user: sessionUser }
   return (
-    <div className="flex justify-between items-center p-4 border-t-8 border-t-brand-dark border-b-2">
+    <div className="flex justify-between items-center p-4 border-t-8 border-t-brand-dark">
       <Link href="/">
         <Image src={logo} alt="Logo" width={200} height={60} />
       </Link>

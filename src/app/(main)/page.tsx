@@ -1,11 +1,20 @@
+import AboutSection from "@/components/home/AboutSection";
+import Com from "@/components/home/Com";
+import { Footer } from "@/components/home/Footer";
 import MyCarousel from "@/components/home/MyCarousel";
+import ServicesSection from "@/components/home/ServicesSection";
+import Slogan from "@/components/home/Slogan";
 import Image from "next/image";
 import Link from "next/link"; // Keep Link if you plan to use it later
 
 export default function HomePage() {
   return (
-    <div className="flex justify-center items-center">
+    <div className="bg-inherit">
       <MyCarousel />
+      <AboutSection />
+      <ServicesSection />
+      <Slogan />
+      <Footer />
       {/* <div className="relative w-full max-w-6xl aspect-video max-h-[80vh]">
         <Image
           src="/slider/service1.jpg"
