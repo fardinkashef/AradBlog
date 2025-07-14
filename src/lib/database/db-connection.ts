@@ -23,7 +23,7 @@ export const connectToDatabase = async () => {
         return console.log("MISSING MONGODB_ATLAS_URL");
 
       await mongoose.connect(process.env.MONGODB_ATLAS_URL, {
-        dbName: "funguage",
+        dbName: "main",
         enableUtf8Validation: false,
       });
     }
