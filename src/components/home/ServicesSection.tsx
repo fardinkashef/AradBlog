@@ -54,7 +54,10 @@ export default function ServicesSection() {
                   key={index}
                   className="bg-white p-0 transform hover:scale-105 transition-transform duration-300 ease-in-out"
                 >
-                  <Link href="/" className="flex items-center gap-4 p-6">
+                  <Link
+                    href={`/services#service${index + 1}`}
+                    className="flex items-center gap-4 p-6"
+                  >
                     <div className="flex-shrink-0">
                       <div className="w-12 h-12 bg-brand-light rounded-full flex items-center justify-center">
                         <IconComponent className="text-white" />
