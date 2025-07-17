@@ -24,6 +24,7 @@ export default function AboutSection() {
             </Button>
           </Link>
         </div>
+        <img src="/PersianGulf.jpg" alt="sdsfd" className="max-w-3xl mx-auto" />
         <div className="relative aspect-video max-w-3xl mx-auto">
           <Image src="/PersianGulf.jpg" alt="Persian Gulf map" fill />
         </div>

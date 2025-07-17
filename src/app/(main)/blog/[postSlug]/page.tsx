@@ -1,17 +1,18 @@
-import PostViewTracker from "@/components/PostViewTracker";
-import { getPostById } from "@/lib/server-actions/posts";
+// import PostViewTracker from "@/components/PostViewTracker";
+import { getPostBySlug } from "@/lib/server-actions/posts";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import YouTubeVideo from "./_components/YouTubeVideo";
 import FileDownloadLink from "./_components/FileDownloadLink";
 
 type BlogPostPageProps = {
-  params: Promise<{ postId: string }>;
+  params: Promise<{ postSlug: string }>;
 };
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const { postId } = await params;
-  const post = await getPostById(postId);
+  const { postSlug } = await params;
+  const post = await getPostBySlug(postSlug);
+  console.log("this is the post:", post);
 
   if (!post) {
     return redirect("/");
@@ -30,7 +31,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <FileDownloadLink fileName={post.fileName} />
       )} */}
       {post.youtubeVideoId && <YouTubeVideo videoId={post.youtubeVideoId} />}
-      <PostViewTracker postId={postId} />
+      {/* <PostViewTracker postId={postId} /> */}
     </div>
   );
 }

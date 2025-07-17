@@ -5,11 +5,11 @@ import BlogPostItem from "./_components/BlogPostItem";
 export default async function BlogPage() {
   const posts = await getPosts();
   return (
-    <div className="container mx-auto max-w-3xl p-5">
+    <div className="container mx-auto max-w-3xl p-5 min-h-screen">
       <ul className="flex flex-col gap-3">
         {posts.map((post) => (
           <li key={post._id}>
-            <Link href={`/blog/${post._id}`}>
+            <Link href={`/blog/${post.slug}`}>
               <BlogPostItem
                 title={post.title}
                 excerpt={post.excerpt}

@@ -3,6 +3,7 @@
 import { connectToDatabase } from "@/lib/database/db-connection";
 import Post from "../database/models/Post";
 import { post } from "../types";
+import { generateSlug } from "../utils/posts";
 // import { revalidatePath } from "next/cache";
 
 export async function getPosts(): Promise<post[]> {
@@ -34,13 +35,27 @@ export async function getPostById(id: string): Promise<post> {
     throw error;
   }
 }
+export async function getPostBySlug(slug: string): Promise<post> {
+  try {
+    await connectToDatabase();
+    const post = (await Post.findOne({ slug }).lean()) as post;
+    if (!post) {
+      throw new Error("There's not any results to return.");
+    }
+    return JSON.parse(JSON.stringify(post));
+  } catch (error) {
+    console.log("This error happened when getting the post by its id:", error);
+    throw error;
+  }
+}
 
 export async function createPost(title: string): Promise<{
   newPostId: string;
 }> {
   try {
     await connectToDatabase();
-    const newPost = new Post({ title });
+    const slug = generateSlug(title);
+    const newPost = new Post({ title, slug });
     await newPost.save();
     return { newPostId: newPost._id.toString() };
     // revalidatePath("/data");
