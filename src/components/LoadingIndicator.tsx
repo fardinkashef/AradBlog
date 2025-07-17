@@ -3,7 +3,7 @@ import logo from "../../public/logo.svg";
 
 export default function LoadingIndicator() {
   return (
-    <div className="grow w-full flex justify-center items-center">
+    <div className="w-full h-screen flex justify-center items-center">
       <Image
         src={logo}
         alt="Logo"
