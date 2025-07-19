@@ -24,6 +24,28 @@ export default function AboutSection() {
             </Button>
           </Link>
         </div>
+        <h2 className="text-center text-2xl">svg format 16KB 👇</h2>
+        <div className="relative aspect-video max-w-3xl mx-auto">
+          <Image src="/PersianGulf/pg.svg" alt="Persian Gulf map" fill />
+        </div>
+        <h2 className="text-center text-2xl">png format 20 KB 👇</h2>
+        <div className="relative aspect-video max-w-3xl mx-auto">
+          <Image src="/PersianGulf/pg.png" alt="Persian Gulf map" fill />
+        </div>
+        <h2 className="text-center text-2xl">jpg format 850 KB 👇</h2>
+        <img
+          src="/PersianGulf/pg.jpg"
+          alt="sdsfd"
+          className="max-w-3xl mx-auto"
+        />
+        <h2 className="text-center text-2xl">jpg format 1.8 MB 👇</h2>
+        <img
+          src="/PersianGulf/pg-hq.jpg"
+          alt="sdsfd"
+          className="max-w-3xl mx-auto"
+        />
+
+        <h2 className="text-center text-2xl">The images we had before 👇</h2>
         <img src="/PersianGulf.jpg" alt="sdsfd" className="max-w-3xl mx-auto" />
         <div className="relative aspect-video max-w-3xl mx-auto">
           <Image src="/PersianGulf.jpg" alt="Persian Gulf map" fill />
