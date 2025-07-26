@@ -1,47 +1,24 @@
 import { z } from "zod";
 
-export const registerFormSchema = z
-  .object({
-    email: z
-      .string({
-        required_error:
-          "You must fill in your email address to complete registration.",
-      })
-      .email({
-        message: "Please provide a valid email address.",
-      }),
-    username: z
-      .string()
-      .min(3, { message: "Username must be at least 3 characters" }),
-    password: z
-      .string({
-        invalid_type_error: "Your password must contain at least 8 characters.",
-        required_error: "You must fill in this field.",
-      })
-      .min(8),
-    confirmPassword: z.string({
-      required_error: "You must fill in this field.",
-    }),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    path: ["confirmPassword"],
-    message: "Passwords does not match",
-  });
-
-export type RegisterFormFields = z.infer<typeof registerFormSchema>;
-
-export const loginFormSchema = z.object({
-  email: z
-    .string({
-      required_error:
-        "You must fill in your email address to complete registration.",
-    })
-    .email({
-      message: "Please provide a valid email address.",
-    }),
-  password: z.string({
-    required_error: "You must fill in this field.",
-  }),
+export const contactFormSchema = z.object({
+  firstName: z.string().min(1, "First Name is required"),
+  lastName: z.string().min(1, "Last Name is required"),
+  email: z.string().email("Invalid email address").min(1, "Email is required"),
+  company: z.string().optional(),
+  phone: z.string().optional(),
+  service: z
+    .enum([
+      "inspection",
+      "compliance",
+      "consultancy",
+      "port-support",
+      "trade-facilitation",
+      "other",
+      "", // Allow empty string for initial state
+    ])
+    .optional(),
+  subject: z.string().min(10, "Subject must be at least 10 characters long"),
+  message: z.string().min(10, "Message must be at least 10 characters long"),
 });
 
-export type LoginFormFields = z.infer<typeof loginFormSchema>;
+export type ContactFormValues = z.infer<typeof contactFormSchema>;
