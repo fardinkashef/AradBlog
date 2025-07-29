@@ -16,7 +16,7 @@ const linkItems = [
 export default function Navbar() {
   // { user }: { user: sessionUser }
   return (
-    <div className="flex justify-between items-center p-4 border-t-8 border-t-brand-dark">
+    <div className="flex justify-between items-center p-4 lg:px-[10%] border-t-8 border-t-brand-dark ">
       <Link href="/">
         <Image src={logo} alt="Logo" width={200} height={60} />
       </Link>
@@ -30,7 +30,7 @@ export default function Navbar() {
             href={linkItem.href}
             className={cn(
               linkItem.title === "Contact" &&
-                "bg-brand-dark text-white rounded-md hover:border-b-brand-dark"
+                "bg-brand-dark text-white rounded-md hover:bg-brand-light px-3"
             )}
             key={index}
           >

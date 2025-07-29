@@ -11,7 +11,7 @@ export default function NavLink(props: ComponentProps<typeof Link>) {
     <Link
       {...props}
       className={cn(
-        "text-brand-dark text-xl font-semibold p-2 border-y-4 border-transparent hover:border-b-brand-light",
+        "text-brand-dark text-lg font-semibold p-1 border-y-4 border-transparent hover:border-b-brand-light",
         pathname === props.href && "border-b-brand-dark",
         props.className
       )}

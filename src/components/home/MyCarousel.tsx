@@ -58,7 +58,7 @@ export default function MyCarousel() {
   return (
     <Carousel
       plugins={[plugin.current]}
-      className="w-full my-3"
+      className="w-full"
       onMouseEnter={plugin.current.stop}
       onMouseLeave={plugin.current.reset}
     >

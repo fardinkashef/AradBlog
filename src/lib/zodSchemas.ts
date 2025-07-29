@@ -17,7 +17,7 @@ export const contactFormSchema = z.object({
       "", // Allow empty string for initial state
     ])
     .optional(),
-  subject: z.string().min(10, "Subject must be at least 10 characters long"),
+  subject: z.string().min(4, "Subject must be at least 10 characters long"),
   message: z.string().min(10, "Message must be at least 10 characters long"),
 });
 
