@@ -83,7 +83,7 @@ export default function MyCarousel() {
                     {item.subTitle}
                   </p>
                   <Link
-                    href="/services"
+                    href={`/services#service${index + 1}`}
                     // className="absolute top-3/4 left-1/2 -translate-x-1/2 -translate-y-1/2"
                     className="w-fit mx-auto"
                   >

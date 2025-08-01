@@ -1,5 +1,4 @@
-import { Mail, MapPin } from "lucide-react";
-import { FaWhatsappSquare } from "react-icons/fa";
+import { Anchor, Mail, MapPin, Phone } from "lucide-react";
 
 import ContactForm from "./_components/ContactForm";
 import StaffCard from "./_components/StaffCard";
@@ -31,13 +30,11 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       {/* Header Section */}
-      <div className="py-12 md:py-20">
+      <div className="bg-slate-900 text-white py-16">
         <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto text-center">
-            <h1 className="text-brand-dark text-3xl md:text-4xl lg:text-5xl font-extrabold mb-6">
-              Contact Us
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 mb-8">
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">Contact Us</h1>
+            <p className="text-xl text-slate-300 mb-8">
               Get in touch with our team of technical, business, and commercial
               marine professionals
             </p>
@@ -53,17 +50,17 @@ export default function ContactPage() {
                 </a>
               </div>
               <div className="flex items-center justify-center gap-3">
-                <FaWhatsappSquare className="h-8 w-8 text-green-500" />
-                <a href="https://wa.me/989981213430">+98 998 121 3430</a>
+                <Phone className="h-6 w-6 text-blue-400" />
+                <a href="tel:+98 998 121 3430">+98 998 121 3430</a>
               </div>
               <div className="flex items-center justify-center gap-3">
                 <Mail className="h-6 w-6 text-blue-400" />
                 <a href="mailto:info@oceanarktech.com">info@oceanarktech.com</a>
               </div>
-              {/* <div className="flex items-center justify-center gap-3">
+              <div className="flex items-center justify-center gap-3">
                 <Anchor className="h-6 w-6 text-blue-400" />
                 <span>Operating in All Iranian Ports & Offshore Waters</span>
-              </div> */}
+              </div>
             </div>
           </div>
         </div>
@@ -71,31 +68,17 @@ export default function ContactPage() {
 
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-3 gap-12">
+          <div className="grid lg:grid-cols-2 gap-12">
             {/* Staff Cards */}
             {staff.map((staffMember) => (
               <StaffCard {...staffMember} key={staffMember.name} />
             ))}
-          </div>
-        </div>
-      </div>
-      {/* Contact Form */}
-      <div className="my-20">
-        <div className="">
-          <div className="container mx-auto px-4">
-            <div className="max-w-5xl mx-auto text-center">
-              <h1 className="text-brand-dark text-xl md:text-2xl lg:text-3xl font-bold mb-6">
-                Send us a Message
-              </h1>
-              <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-8">
-                Tell us about your marine service requirements and we&apos;ll
-                get back to you promptly.
-              </p>
+            {/* Contact Form */}
+            <div>
+              <ContactForm />
             </div>
           </div>
         </div>
-
-        <ContactForm />
       </div>
     </div>
   );

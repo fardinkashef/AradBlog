@@ -21,7 +21,20 @@ export async function getPosts(): Promise<post[]> {
     throw error;
   }
 }
-
+export async function getRecentPosts() {
+  try {
+    await connectToDatabase();
+    // Todo: Just return key-value pairs you actually need. For example don't return the content of the post which is a long string.
+    const posts = await Post.find().sort({ createdAt: -1 }).limit(5).lean();
+    if (!posts) {
+      throw new Error("There's not any results to return.");
+    }
+    return posts;
+  } catch (error) {
+    console.log("This error happened when getting recent posts:", error);
+    throw error;
+  }
+}
 export async function getPostById(id: string): Promise<post> {
   try {
     await connectToDatabase();

@@ -6,7 +6,7 @@ const PostSchema = new Schema(
     slug: {
       type: String,
       required: true,
-      unique: true, 
+      unique: true,
       lowercase: true,
       trim: true,
       index: true,
@@ -21,6 +21,7 @@ const PostSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    readTime: Number, // readTime in minutes
     // creator: { type: String, required: true, ref: "User" },
   },
   { timestamps: true }

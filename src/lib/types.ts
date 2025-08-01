@@ -1,5 +1,6 @@
 export type post = {
   title: string;
+  slug: string;
   excerpt: string;
   content: string;
   imageSrc: string;

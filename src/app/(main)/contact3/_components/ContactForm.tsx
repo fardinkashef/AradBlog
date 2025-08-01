@@ -39,8 +39,8 @@ export default function ContactForm() {
     else toast.error("Something went wrong while sending your message");
   };
   return (
-    <Card className="max-w-xl mx-auto">
-      {/* <CardHeader className="mb-6">
+    <Card>
+      <CardHeader className="mb-6">
         <CardTitle className="text-2xl font-bold text-slate-800">
           Send us a Message
         </CardTitle>
@@ -48,14 +48,14 @@ export default function ContactForm() {
           Tell us about your marine service requirements and we&apos;ll get back
           to you promptly.
         </p>
-      </CardHeader> */}
+      </CardHeader>
       <CardContent>
         <Form {...contactForm}>
           <form
             onSubmit={contactForm.handleSubmit(submit)}
             className="space-y-8"
           >
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid md:grid-cols-2 gap-4">
               <FormField
                 control={contactForm.control}
                 name="firstName"
@@ -104,40 +104,38 @@ export default function ContactForm() {
                 </FormItem>
               )}
             />
-            <div className="grid md:grid-cols-2 gap-8">
-              <FormField
-                control={contactForm.control}
-                name="company"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Company/Organization</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Your company name" {...field} />
-                    </FormControl>
-                    {/* <FormDescription>This is your email.</FormDescription> */}
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={contactForm.control}
-                name="phone"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Phone Number</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="+XX XXX XXX XXXX"
-                        type="tel"
-                        {...field}
-                      />
-                    </FormControl>
-                    {/* <FormDescription>This is your email.</FormDescription> */}
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+            <FormField
+              control={contactForm.control}
+              name="company"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Company/Organization</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Your company name" {...field} />
+                  </FormControl>
+                  {/* <FormDescription>This is your email.</FormDescription> */}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={contactForm.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Phone Number</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="+XX XXX XXX XXXX"
+                      type="tel"
+                      {...field}
+                    />
+                  </FormControl>
+                  {/* <FormDescription>This is your email.</FormDescription> */}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={contactForm.control}
               name="subject"
