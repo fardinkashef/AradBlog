@@ -6,7 +6,7 @@ import { post } from "../types";
 import { generateSlug, getReadTime } from "../utils/posts";
 // import { revalidatePath } from "next/cache";
 
-export async function getPosts(): Promise<post[]> {
+export async function getAllPosts(): Promise<post[]> {
   try {
     await connectToDatabase();
     const posts = (await Post.find().lean()) as post[];
@@ -21,11 +21,27 @@ export async function getPosts(): Promise<post[]> {
     throw error;
   }
 }
+export async function getPublishedPosts(): Promise<post[]> {
+  try {
+    await connectToDatabase();
+    const posts = (await Post.find({ isPublished: true }).lean()) as post[];
+    if (!posts) {
+      throw new Error("There's not any results to return.");
+    }
+    return posts;
+  } catch (error) {
+    console.log("This error happened when getting all the posts:", error);
+    throw error;
+  }
+}
 export async function getRecentPosts() {
   try {
     await connectToDatabase();
     // Todo: Just return key-value pairs you actually need. For example don't return the content of the post which is a long string.
-    const posts = await Post.find().sort({ createdAt: -1 }).limit(5).lean();
+    const posts = await Post.find({ isPublished: true })
+      .sort({ createdAt: -1 })
+      .limit(5)
+      .lean();
     if (!posts) {
       throw new Error("There's not any results to return.");
     }

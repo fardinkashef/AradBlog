@@ -1,11 +1,11 @@
-import { getPosts } from "@/lib/server-actions/posts";
+import { getPublishedPosts } from "@/lib/server-actions/posts";
 import Link from "next/link";
 import BlogPostItem from "./_components/BlogPostItem";
 
 export default async function BlogPage() {
-  const posts = await getPosts();
+  const posts = await getPublishedPosts();
   return (
-    <div className="container mx-auto max-w-3xl p-5 min-h-screen">
+    <div className="container mx-auto mt-12 max-w-3xl p-5 min-h-screen">
       <ul className="flex flex-col gap-3">
         {posts.map((post) => (
           <li key={post._id}>

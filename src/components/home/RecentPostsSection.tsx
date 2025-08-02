@@ -58,9 +58,10 @@ export default async function RecentPostsSection() {
                       alt={post.title}
                       fill
                     />
-                    <Badge className="absolute top-3 left-3 bg-background/90 text-foreground">
+                    {/* //Todo: Add tags here */}
+                    {/* <Badge className="absolute top-3 left-3 bg-background/90 text-foreground">
                       {tag}
-                    </Badge>
+                    </Badge> */}
                   </div>
 
                   <CardHeader>

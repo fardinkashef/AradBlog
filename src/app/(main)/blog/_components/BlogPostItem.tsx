@@ -34,11 +34,11 @@ export default function BlogPostItem({
 
         {/* Metadata */}
         <div className="flex items-center gap-6 text-sm text-gray-500">
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 w-24">
             <div className="w-3 h-3 bg-orange-400 rotate-45"></div>
             <span>{formatPostDate(createdAt)}</span>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 w-12">
             <Eye className="w-4 h-4" />
             <span>{views}</span>
           </div>
@@ -61,7 +61,7 @@ export default function BlogPostItem({
       {imageSrc && (
         <div className="relative w-32 aspect-video rounded-lg overflow-hidden bg-gray-100">
           <Image
-            src={imageSrc || "/placeholder.svg"}
+            src={imageSrc}
             alt={title}
             fill
             className="w-full h-full object-cover"

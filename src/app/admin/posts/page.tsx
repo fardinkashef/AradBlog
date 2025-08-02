@@ -1,11 +1,11 @@
-import { getPosts } from "@/lib/server-actions/posts";
+import { getAllPosts } from "@/lib/server-actions/posts";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 import PostItem from "./_components/PostItem";
 import { Button } from "@/components/ui/button";
 
 export default async function PostsPage() {
-  const posts = await getPosts();
+  const posts = await getAllPosts();
   return (
     <div className="w-full max-w-3xl mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-8">
@@ -26,6 +26,7 @@ export default async function PostsPage() {
             <Link href={`/admin/posts/${post._id}`}>
               <PostItem
                 title={post.title}
+                readTime={post.readTime}
                 excerpt={post.excerpt}
                 imageSrc={post.imageSrc}
                 createdAt={post.createdAt.toDateString()}
