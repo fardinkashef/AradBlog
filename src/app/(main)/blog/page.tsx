@@ -12,6 +12,7 @@ export default async function BlogPage() {
             <Link href={`/blog/${post.slug}`}>
               <BlogPostItem
                 title={post.title}
+                readTime={post.readTime}
                 excerpt={post.excerpt}
                 imageSrc={post.imageSrc}
                 createdAt={post.createdAt.toDateString()}

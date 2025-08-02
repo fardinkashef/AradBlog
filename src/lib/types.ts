@@ -3,6 +3,7 @@ export type post = {
   slug: string;
   excerpt: string;
   content: string;
+  readTime: number;
   imageSrc: string;
   // fileName?: string;
   attachments: string[]; // The names of the attached files(.e.g ['article.pdf' , 'photo.jpg'])

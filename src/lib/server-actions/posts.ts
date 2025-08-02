@@ -3,7 +3,7 @@
 import { connectToDatabase } from "@/lib/database/db-connection";
 import Post from "../database/models/Post";
 import { post } from "../types";
-import { generateSlug } from "../utils/posts";
+import { generateSlug, getReadTime } from "../utils/posts";
 // import { revalidatePath } from "next/cache";
 
 export async function getPosts(): Promise<post[]> {
@@ -56,6 +56,7 @@ export async function getPostBySlug(slug: string): Promise<post> {
       throw new Error("There's not any results to return.");
     }
     return JSON.parse(JSON.stringify(post));
+    // return post;
   } catch (error) {
     console.log("This error happened when getting the post by its id:", error);
     throw error;
@@ -181,9 +182,10 @@ export async function updatePostContent(postId: string, newContent: string) {
     const error = new Error("Could not find cPosts for this id.");
     throw error;
   }
-
+  const readTime = getReadTime(newContent);
   try {
     post.content = newContent;
+    post.readTime = readTime;
     await post.save();
   } catch (error) {
     console.log("This error happened while updating the data:", error);

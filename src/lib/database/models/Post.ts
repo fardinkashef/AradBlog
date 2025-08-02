@@ -13,6 +13,7 @@ const PostSchema = new Schema(
     },
     excerpt: String,
     content: String,
+    readTime: Number, // readTime in minutes
     imageSrc: String,
     // fileName: String,
     attachments: { type: [String], default: [] },
@@ -21,7 +22,6 @@ const PostSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    readTime: Number, // readTime in minutes
     // creator: { type: String, required: true, ref: "User" },
   },
   { timestamps: true }
