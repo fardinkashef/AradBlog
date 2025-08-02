@@ -17,7 +17,7 @@ export default function BlogPostItem({
   imageSrc,
   createdAt,
 }: BlogPostItemProps) {
-  const views = 335;
+  // const views = 335;
   // const likes = 25;
   // const comments = 10;
   return (
@@ -38,10 +38,10 @@ export default function BlogPostItem({
             <div className="w-3 h-3 bg-orange-400 rotate-45"></div>
             <span>{formatPostDate(createdAt)}</span>
           </div>
-          <div className="flex items-center gap-1 w-12">
+          {/* <div className="flex items-center gap-1 w-12">
             <Eye className="w-4 h-4" />
             <span>{views}</span>
-          </div>
+          </div> */}
           <div className="flex items-center gap-1">
             <Timer className="w-4 h-4" />
             <span>{readTime} min read</span>
