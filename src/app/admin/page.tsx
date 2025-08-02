@@ -4,12 +4,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { PlusCircle, BarChart, FileText, MessageSquare } from "lucide-react";
 import { countPosts } from "@/lib/server-actions/posts";
-import { getThisWeekViews } from "@/lib/server-actions/views";
 
 export default async function AdminPage() {
   const { totalPosts, publishedPosts, draftPosts } = await countPosts();
   const pendingComments = 5;
-  const viewsThisWeek = await getThisWeekViews();
+  // const viewsThisWeek = await getThisWeekViews();
 
   return (
     <div className="container mx-auto p-8">
@@ -29,7 +28,7 @@ export default async function AdminPage() {
             </p>
           </CardContent>
         </Card>
-        <Card>
+        {/* <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Recent Views</CardTitle>
             <BarChart className="h-4 w-4 text-muted-foreground" />
@@ -38,7 +37,7 @@ export default async function AdminPage() {
             <div className="text-2xl font-bold">{viewsThisWeek}</div>
             <p className="text-xs text-muted-foreground">This Week</p>
           </CardContent>
-        </Card>
+        </Card> */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">

@@ -1,4 +1,3 @@
-// import PostViewTracker from "@/components/PostViewTracker";
 import { getPostBySlug } from "@/lib/server-actions/posts";
 import Image from "next/image";
 import { redirect } from "next/navigation";
@@ -20,7 +19,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const postViews = await getPostViews(postSlug);
 
   return (
-    <div className="max-w-2xl mx-auto mt-6 mb-14 flex flex-col gap-2">
+    <div className="max-w-2xl mx-auto mt-6 mb-16 flex flex-col gap-2">
       <h1 className="text-4xl font-bold text-gray-800 mb-6">
         {post.title}
         {postViews}
@@ -40,7 +39,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <FileDownloadLink fileName={post.fileName} />
       )} */}
       {post.youtubeVideoId && <YouTubeVideo videoId={post.youtubeVideoId} />}
-      {/* <PostViewTracker postId={postId} /> */}
     </div>
   );
 }
