@@ -37,12 +37,16 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       )}
 
       <div
-        className="py-3 max-w-2xl mx-auto w-full post-content"
+        className="my-3 max-w-2xl mx-auto w-full post-content"
         dangerouslySetInnerHTML={{ __html: post?.content }}
       ></div>
-      {/* {post.attachments.length > 0 && (
-        <FileDownloadLink fileName={post.fileName} />
-      )} */}
+      {post.attachments.length > 0 && (
+        <div className="flex flex-wrap gap-4 my-8">
+          {post.attachments.map((attachment) => (
+            <FileDownloadLink fileName={attachment} key={attachment} />
+          ))}
+        </div>
+      )}
       {post.youtubeVideoId && <YouTubeVideo videoId={post.youtubeVideoId} />}
     </div>
   );
