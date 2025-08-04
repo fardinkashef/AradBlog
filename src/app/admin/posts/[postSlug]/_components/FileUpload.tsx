@@ -3,17 +3,17 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import axios from "axios";
-import { Upload, X, File, Pencil, Plus, Paperclip } from "lucide-react";
+import { Upload, X, File, Plus, Paperclip } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCallback, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
 type FileUploadProps = {
   attachments: string[]; // The names of the attached files(.e.g ['article.pdf' , 'photo.jpg'])
-  postId: string;
+  postSlug: string;
 };
 
-export default function FileUpload({ attachments, postId }: FileUploadProps) {
+export default function FileUpload({ attachments, postSlug }: FileUploadProps) {
   const [files, setFiles] = useState<File[]>([]);
   const [isAdding, setIsAdding] = useState(false); // Adding a new file
   const [progress, setProgress] = useState<number>(0);
@@ -29,7 +29,7 @@ export default function FileUpload({ attachments, postId }: FileUploadProps) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ postId, fileName }),
+        body: JSON.stringify({ postSlug, fileName }),
       });
       toast.success("File deleted successfully");
       router.refresh();
@@ -58,7 +58,7 @@ export default function FileUpload({ attachments, postId }: FileUploadProps) {
     // Create form data
     const formData = new FormData();
     files.forEach((file: File) => formData.append("files", file));
-    formData.append("postId", postId);
+    formData.append("postSlug", postSlug);
     setUploading(true);
     setProgress(0);
 

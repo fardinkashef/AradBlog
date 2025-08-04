@@ -1,19 +1,18 @@
-import { getPostById } from "@/lib/server-actions/posts";
+import { getPostBySlug } from "@/lib/server-actions/posts";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import YouTubeVideo from "./_components/YouTubeVideo";
-import { Eye } from "lucide-react";
 import { formatPostDate } from "@/lib/utils/posts";
 
 type PostPreviewPageProps = {
-  params: Promise<{ postId: string }>;
+  params: Promise<{ postSlug: string }>;
 };
 
 export default async function PostPreviewPage({
   params,
 }: PostPreviewPageProps) {
-  const { postId } = await params;
-  const post = await getPostById(postId);
+  const { postSlug } = await params;
+  const post = await getPostBySlug(postSlug);
 
   if (!post) {
     return redirect("/");

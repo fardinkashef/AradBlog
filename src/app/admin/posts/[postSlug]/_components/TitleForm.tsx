@@ -15,26 +15,23 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { updatePostExcerpt } from "@/lib/server-actions/posts";
-import { Textarea } from "@/components/ui/textarea";
+import { updatePostTitle } from "@/lib/server-actions/posts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-interface ExcerptFormProps {
-  initialExcerpt: string;
-  postId: string;
+interface TitleFormProps {
+  initialTitle: string;
+  postSlug: string;
 }
 
 const formSchema = z.object({
-  excerpt: z.string().min(1, {
-    message: "excerpt is required",
+  title: z.string().min(1, {
+    message: "Title is required",
   }),
 });
 
-export default function ExcerptForm({
-  initialExcerpt,
-  postId,
-}: ExcerptFormProps) {
+export const TitleForm = ({ initialTitle, postSlug }: TitleFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const toggleEdit = () => setIsEditing((current) => !current);
@@ -43,15 +40,15 @@ export default function ExcerptForm({
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: { excerpt: initialExcerpt },
+    defaultValues: { title: initialTitle },
   });
 
   const { isSubmitting, isValid } = form.formState;
 
   const submit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await updatePostExcerpt(postId, values.excerpt);
-      toast.success("Post excerpt updated");
+      await updatePostTitle(postSlug, values.title);
+      toast.success("Post title updated");
       toggleEdit();
       router.refresh();
     } catch (error: any) {
@@ -72,7 +69,7 @@ export default function ExcerptForm({
   return (
     <Card className="bg-white dark:bg-gray-800">
       <CardHeader className="font-medium flex items-center justify-between">
-        <CardTitle className="text-2xl">Excerpt</CardTitle>
+        <CardTitle className="text-2xl">Title</CardTitle>
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>
@@ -86,23 +83,23 @@ export default function ExcerptForm({
       </CardHeader>
       <CardContent>
         {!isEditing && (
-          <p className="text-sm dark:text-gray-300">{initialExcerpt}</p>
+          <p className="text-sm dark:text-gray-300">{initialTitle}</p>
         )}
         {isEditing && (
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(submit)}
-              className="dark:text-gray-300"
+              className=" dark:text-gray-300"
             >
               <FormField
                 control={form.control}
-                name="excerpt"
+                name="title"
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Textarea
+                      <Input
                         disabled={isSubmitting}
-                        placeholder="e.g. 'This is the excerpt'"
+                        placeholder="e.g. 'Advanced web development'"
                         {...field}
                       />
                     </FormControl>
@@ -121,4 +118,4 @@ export default function ExcerptForm({
       </CardContent>
     </Card>
   );
-}
+};

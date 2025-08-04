@@ -113,36 +113,11 @@ export async function countPosts() {
 
 //* Updating functions 👇:
 
-// export async function updateCourse(courseId: string, newData: any) {
-//   let result;
-//   try {
-//     await connectToDatabase();
-//     result = await Course.findById(courseId);
-//   } catch (error) {
-//     console.log("This error happened while updating the data:", error);
-//     throw error;
-//   }
-
-//   if (!result) {
-//     const error = new Error("Could not find results for this id.");
-//     throw error;
-//   }
-
-//   try {
-//     console.log("newData", newData);
-
-//     await result.updateOne({ _id: courseId }, newData);
-//     // revalidatePath("/data");
-//   } catch (error) {
-//     console.log("This error happened while deleting the data:", error);
-//     throw error;
-//   }
-// }
-export async function updatePostTitle(postId: string, newTitle: string) {
+export async function updatePostTitle(postSlug: string, newTitle: string) {
   let post;
   try {
     await connectToDatabase();
-    post = await Post.findById(postId);
+    post = await Post.findOne({ slug: postSlug });
   } catch (error) {
     console.log("This error happened while updating the data:", error);
     throw error;
@@ -161,11 +136,11 @@ export async function updatePostTitle(postId: string, newTitle: string) {
     throw error;
   }
 }
-export async function updatePostExcerpt(postId: string, newExcerpt: string) {
+export async function updatePostExcerpt(postSlug: string, newExcerpt: string) {
   let post;
   try {
     await connectToDatabase();
-    post = await Post.findById(postId);
+    post = await Post.findOne({ slug: postSlug });
   } catch (error) {
     console.log("This error happened while updating the data:", error);
     throw error;
@@ -184,11 +159,11 @@ export async function updatePostExcerpt(postId: string, newExcerpt: string) {
     throw error;
   }
 }
-export async function updatePostContent(postId: string, newContent: string) {
+export async function updatePostContent(postSlug: string, newContent: string) {
   let post;
   try {
     await connectToDatabase();
-    post = await Post.findById(postId);
+    post = await Post.findOne({ slug: postSlug });
   } catch (error) {
     console.log("This error happened while updating the data:", error);
     throw error;
@@ -209,13 +184,13 @@ export async function updatePostContent(postId: string, newContent: string) {
   }
 }
 export async function updatePostPublishStatus(
-  postId: string,
+  postSlug: string,
   publishStatus: boolean
 ) {
   let post;
   try {
     await connectToDatabase();
-    post = await Post.findById(postId);
+    post = await Post.findOne({ slug: postSlug });
   } catch (error) {
     console.log("This error happened while updating the data:", error);
     throw error;
@@ -235,13 +210,13 @@ export async function updatePostPublishStatus(
   }
 }
 export async function updatePostYouTubeVideoId(
-  postId: string,
+  postSlug: string,
   newVideoId: string
 ) {
   let post;
   try {
     await connectToDatabase();
-    post = await Post.findById(postId);
+    post = await Post.findOne({ slug: postSlug });
   } catch (error) {
     console.log("This error happened while updating the data:", error);
     throw error;
@@ -264,18 +239,18 @@ export async function updatePostYouTubeVideoId(
 
 //* Deleting functions 👇:
 
-export async function deletePostVideo(postId: string) {
+export async function deletePostVideo(postSlug: string) {
   let post;
   try {
     await connectToDatabase();
-    post = await Post.findById(postId);
+    post = await Post.findOne({ slug: postSlug });
   } catch (error) {
     console.log("This error happened while updating the data:", error);
     throw error;
   }
 
   if (!post) {
-    const error = new Error("Could not find a post for this id.");
+    const error = new Error("Could not find a post for this slug.");
     throw error;
   }
 

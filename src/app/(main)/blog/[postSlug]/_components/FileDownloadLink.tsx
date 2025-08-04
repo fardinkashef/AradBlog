@@ -1,9 +1,17 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Download, File } from "lucide-react";
 
-export default function FileDownloadLink({ fileName }: { fileName: string }) {
+type FileDownloadLinkProps = {
+  postSlug: string;
+  fileName: string;
+};
+
+export default function FileDownloadLink({
+  postSlug,
+  fileName,
+}: FileDownloadLinkProps) {
   return (
-    <a href={`/uploads/files/posts/${fileName}`} download>
+    <a href={`/uploads/files/posts/${postSlug}/${fileName}`} download>
       <Card className="w-fit">
         <CardContent className="flex items-center gap-5">
           <div className="flex-shrink-0">

@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
     // Only handle POST requests
     const formData = await request.formData();
     const file = formData.get("image") as File;
-    const postId = formData.get("postId") as string;
+    const postSlug = formData.get("postSlug") as string;
 
     if (!file) {
       return NextResponse.json(
@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
 
     // Handle file name
     const fileExtension = path.extname(file.name);
-    const newFilename = `${postId}${fileExtension}`;
+    const newFilename = `${postSlug}${fileExtension}`;
 
     // Create the final path for the file
     const finalPath = path.join(uploadsDir, newFilename);
@@ -49,13 +49,13 @@ export async function POST(request: NextRequest) {
     const imageSrc = `/uploads/images/posts/${newFilename}`;
     // Update the post object in database
     await connectToDatabase();
-    const post = await Post.findById(postId);
+    const post = await Post.findOne({ slug: postSlug });
     if (!post) {
       throw new Error("There's not any results to return.");
     }
     post.imageSrc = imageSrc;
     await post.save();
-    // revalidatePath(`/admin/posts/${postId}`, "page");
+    // revalidatePath(`/admin/posts/${postSlug}`, "page");
     // Return success response
     return NextResponse.json({
       success: true,

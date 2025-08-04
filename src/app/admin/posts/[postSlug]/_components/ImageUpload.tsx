@@ -12,11 +12,11 @@ import toast from "react-hot-toast";
 type ImageUploadProps = {
   // The src of the image uploaded previously which we can delete and replace with a new one 👇:
   imageSrc?: string;
-  // The name that will be used to store the image, extension not included, e.g. postId = "book" or "145468523"  👇:
-  postId: string;
+  // The name that will be used to store the image, extension not included, e.g. postSlug = "book" or "145468523"  👇:
+  postSlug: string;
 };
 
-export default function ImageUpload({ imageSrc, postId }: ImageUploadProps) {
+export default function ImageUpload({ imageSrc, postSlug }: ImageUploadProps) {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
   const [error, setError] = useState("");
@@ -64,11 +64,11 @@ export default function ImageUpload({ imageSrc, postId }: ImageUploadProps) {
       </CardHeader>
       <CardContent>
         {imageSrc ? (
-          <ImageView imageSrc={imageSrc} postId={postId} />
+          <ImageView imageSrc={imageSrc} postSlug={postSlug} />
         ) : imagePreviewUrl && imageFile ? (
           <ImagePreview
             imagePreviewUrl={imagePreviewUrl}
-            postId={postId}
+            postSlug={postSlug}
             imageFile={imageFile}
             setImageFile={setImageFile}
             handleRemoveFile={handleRemoveFile}
@@ -190,7 +190,13 @@ function ImageInputAndDrag({ processImageFile }: ImageInputAndDragProps) {
   );
 }
 
-function ImageView({ imageSrc, postId }: { imageSrc: string; postId: string }) {
+function ImageView({
+  imageSrc,
+  postSlug,
+}: {
+  imageSrc: string;
+  postSlug: string;
+}) {
   const [src, setSrc] = useState<string>();
 
   const router = useRouter();
@@ -201,7 +207,7 @@ function ImageView({ imageSrc, postId }: { imageSrc: string; postId: string }) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ postId }),
+        body: JSON.stringify({ postSlug }),
       });
       toast.success("Post image deleted successfully");
       router.refresh();
@@ -237,14 +243,14 @@ function ImageView({ imageSrc, postId }: { imageSrc: string; postId: string }) {
 
 type ImagePreviewProps = {
   imagePreviewUrl: string;
-  postId: string;
+  postSlug: string;
   imageFile: File;
   setImageFile: React.Dispatch<React.SetStateAction<File | null>>;
   handleRemoveFile: () => void;
 };
 function ImagePreview({
   imagePreviewUrl,
-  postId,
+  postSlug,
   imageFile,
   setImageFile,
   // setError,
@@ -274,7 +280,7 @@ function ImagePreview({
     // Create form data
     const formData = new FormData();
     formData.append("image", imageFile);
-    formData.append("postId", postId);
+    formData.append("postSlug", postSlug);
     setUploading(true);
     setProgress(0);
 

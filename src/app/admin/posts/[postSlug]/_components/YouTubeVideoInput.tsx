@@ -27,12 +27,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 type YouTubeVideoInputProps = {
   youtubeVideoId?: string;
-  postId: string;
+  postSlug: string;
 };
 
 export default function YouTubeVideoInput({
   youtubeVideoId,
-  postId,
+  postSlug,
 }: YouTubeVideoInputProps) {
   const [videoId, setVideoId] = useState<string | null>(null); // YouTube video id generated from video url admin provided.
   const [error, setError] = useState("");
@@ -51,11 +51,11 @@ export default function YouTubeVideoInput({
       </CardHeader>
       <CardContent>
         {youtubeVideoId ? (
-          <VideoView youtubeVideoId={youtubeVideoId} postId={postId} />
+          <VideoView youtubeVideoId={youtubeVideoId} postSlug={postSlug} />
         ) : videoId ? (
           <VideoPreview
             videoId={videoId}
-            postId={postId}
+            postSlug={postSlug}
             handleCancelVideo={handleCancelVideo}
           />
         ) : (
@@ -74,16 +74,16 @@ export default function YouTubeVideoInput({
 
 function VideoView({
   youtubeVideoId,
-  postId,
+  postSlug,
 }: {
   youtubeVideoId: string;
-  postId: string;
+  postSlug: string;
 }) {
   // const [src, setSrc] = useState<string>();
 
   const router = useRouter();
   const handleRemoveVideo = async () => {
-    await deletePostVideo(postId);
+    await deletePostVideo(postSlug);
     router.refresh();
   };
 
@@ -107,12 +107,12 @@ function VideoView({
 
 type VideoPreviewProps = {
   videoId: string;
-  postId: string;
+  postSlug: string;
   handleCancelVideo: () => void;
 };
 function VideoPreview({
   videoId,
-  postId,
+  postSlug,
   handleCancelVideo,
 }: VideoPreviewProps) {
   const [isSaving, setIsSaving] = useState(false);
@@ -120,7 +120,7 @@ function VideoPreview({
 
   const handleSubmit = async () => {
     setIsSaving(true);
-    await updatePostYouTubeVideoId(postId, videoId);
+    await updatePostYouTubeVideoId(postSlug, videoId);
     toast.success("YouTube video updated successfully");
     setIsSaving(false);
     router.refresh();

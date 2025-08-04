@@ -7,10 +7,9 @@ import Post from "@/lib/database/models/Post";
 
 export async function POST(request: NextRequest) {
   try {
-    // Only handle POST requests
     const formData = await request.formData();
     const files = formData.getAll("files"); // This will be an array of File objects
-    const postId = formData.get("postId") as string;
+    const postSlug = formData.get("postSlug") as string;
 
     // Corrected check: if no files were actually provided
     if (files.length === 0) {
@@ -24,7 +23,7 @@ export async function POST(request: NextRequest) {
       "uploads",
       "files",
       "posts",
-      postId
+      postSlug
     );
     if (!existsSync(uploadsDir)) {
       await mkdir(uploadsDir, { recursive: true });
@@ -32,7 +31,6 @@ export async function POST(request: NextRequest) {
 
     const newAttachments: string[] = [];
 
-    // --- FIX STARTS HERE ---
     // Use Promise.all to wait for all file operations to complete
     const uploadPromises = files.map(async (file: File) => {
       // Explicitly type 'file' as File
@@ -63,14 +61,10 @@ export async function POST(request: NextRequest) {
     newAttachments.push(
       ...(uploadedFileNames.filter((name) => name !== null) as string[])
     );
-    // --- FIX ENDS HERE ---
-
-    console.log("this is files:", files); // This will now log before the update, but the newAttachments will be ready
-    console.log("newAttachments after uploads:", newAttachments); // You can log this to verify
 
     // Update the post object in database
     await connectToDatabase();
-    const post = await Post.findById(postId);
+    const post = await Post.findOne({ slug: postSlug });
     if (!post) {
       // You might want to handle this more gracefully, e.g., delete uploaded files
       throw new Error("There's not any results to return.");
@@ -82,7 +76,7 @@ export async function POST(request: NextRequest) {
     }
     post.attachments = [...post.attachments, ...newAttachments];
     await post.save();
-    // revalidatePath(`/admin/posts/${postId}`, "page");
+    // revalidatePath(`/admin/posts/${postSlug}`, "page");
 
     // Return success response
     return NextResponse.json({

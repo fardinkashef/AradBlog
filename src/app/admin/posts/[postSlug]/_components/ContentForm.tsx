@@ -12,19 +12,17 @@ import "react-quill-new/dist/quill.snow.css";
 
 export default function ContentForm({
   initialContent,
-  postId,
+  postSlug,
 }: {
   initialContent: string;
-  postId: string;
+  postSlug: string;
 }) {
   const [value, setValue] = useState(initialContent);
   const [isEditing, setIsEditing] = useState(false);
 
   const toggleEdit = () => setIsEditing((current) => !current);
   const handleSaveContent = async () => {
-    console.log("value", value);
-
-    await updatePostContent(postId, value);
+    await updatePostContent(postSlug, value);
     toast.success("Content updated sucessfully");
     toggleEdit();
   };

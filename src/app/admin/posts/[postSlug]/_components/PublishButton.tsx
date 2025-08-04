@@ -6,20 +6,20 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 export default function PublishButton({
-  postId,
+  postSlug,
   isPublished,
 }: {
-  postId: string;
+  postSlug: string;
   isPublished: boolean;
 }) {
   const router = useRouter();
   const handlePublishPost = async () => {
-    await updatePostPublishStatus(postId, true);
+    await updatePostPublishStatus(postSlug, true);
     toast.success("Post published successfully");
     router.refresh();
   };
   const handleUnublishPost = async () => {
-    await updatePostPublishStatus(postId, false);
+    await updatePostPublishStatus(postSlug, false);
     toast.success("Post unpublished successfully");
     router.refresh();
   };

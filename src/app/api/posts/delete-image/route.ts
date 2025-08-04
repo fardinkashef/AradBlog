@@ -6,21 +6,21 @@ import Post from "@/lib/database/models/Post";
 
 export async function POST(req: Request) {
   try {
-    const { postId } = await req.json();
+    const { postSlug } = await req.json();
 
-    if (!postId) {
+    if (!postSlug) {
       return NextResponse.json(
-        { error: "No post ID provided." },
+        { error: "No post slug provided." },
         { status: 400 }
       );
     }
     // First update the post object in database
     await connectToDatabase();
-    const post = await Post.findById(postId);
+    const post = await Post.findOne({ slug: postSlug });
     if (!post) {
       throw new Error("There's not any results to return.");
     }
-    post.imageSrc = undefined;
+    post.imageSrc = "";
     await post.save();
     // Next remove the image file(s) from server
     const imagesDir = path.join(
@@ -32,7 +32,7 @@ export async function POST(req: Request) {
     );
     const files = fs.readdirSync(imagesDir);
     const matchingFiles = files.filter(
-      (file) => path.parse(file).name === postId
+      (file) => path.parse(file).name === postSlug
     );
 
     if (matchingFiles.length === 0) {

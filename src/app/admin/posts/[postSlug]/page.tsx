@@ -1,4 +1,4 @@
-import { getPostById } from "@/lib/server-actions/posts";
+import { getPostBySlug } from "@/lib/server-actions/posts";
 import { TitleForm } from "./_components/TitleForm";
 import { redirect } from "next/navigation";
 import ImageUpload from "./_components/ImageUpload";
@@ -13,12 +13,12 @@ import YouTubeVideoInput from "./_components/YouTubeVideoInput";
 import FileUpload from "./_components/FileUpload";
 
 type PostPageProps = {
-  params: Promise<{ postId: string }>;
+  params: Promise<{ postSlug: string }>;
 };
 
 export default async function PostPage({ params }: PostPageProps) {
-  const { postId } = await params;
-  const post = await getPostById(postId);
+  const { postSlug } = await params;
+  const post = await getPostBySlug(postSlug);
 
   if (!post) {
     return redirect("/");
@@ -30,9 +30,9 @@ export default async function PostPage({ params }: PostPageProps) {
           Manage your post
         </h1>
         <div className="flex gap-3">
-          <DeleteButton postId={postId} />
+          <DeleteButton postSlug={postSlug} />
           <Link
-            href={`/admin/posts/${postId}/preview`}
+            href={`/admin/posts/${postSlug}/preview`}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -41,15 +41,18 @@ export default async function PostPage({ params }: PostPageProps) {
               Preview
             </Button>
           </Link>
-          <PublishButton postId={postId} isPublished={post.isPublished} />
+          <PublishButton postSlug={postSlug} isPublished={post.isPublished} />
         </div>
       </div>
-      <TitleForm initialTitle={post.title} postId={postId} />
-      <ExcerptForm initialExcerpt={post.excerpt || ""} postId={postId} />
-      <ImageUpload imageSrc={post.imageSrc} postId={postId} />
-      <FileUpload attachments={post.attachments} postId={postId} />
-      <ContentForm initialContent={post.content || ""} postId={postId} />
-      <YouTubeVideoInput youtubeVideoId={post.youtubeVideoId} postId={postId} />
+      <TitleForm initialTitle={post.title} postSlug={postSlug} />
+      <ExcerptForm initialExcerpt={post.excerpt || ""} postSlug={postSlug} />
+      <ImageUpload imageSrc={post.imageSrc} postSlug={postSlug} />
+      <FileUpload attachments={post.attachments} postSlug={postSlug} />
+      <ContentForm initialContent={post.content || ""} postSlug={postSlug} />
+      <YouTubeVideoInput
+        youtubeVideoId={post.youtubeVideoId}
+        postSlug={postSlug}
+      />
     </div>
   );
 }

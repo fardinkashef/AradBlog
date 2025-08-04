@@ -43,7 +43,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       {post.attachments.length > 0 && (
         <div className="flex flex-wrap gap-4 my-8">
           {post.attachments.map((attachment) => (
-            <FileDownloadLink fileName={attachment} key={attachment} />
+            <FileDownloadLink postSlug={postSlug} fileName={attachment} key={attachment} />
           ))}
         </div>
       )}

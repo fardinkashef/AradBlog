@@ -6,17 +6,17 @@ import Post from "@/lib/database/models/Post";
 
 export async function POST(req: Request) {
   try {
-    const { postId, fileName } = await req.json();
+    const { postSlug, fileName } = await req.json();
 
-    if (!postId) {
+    if (!postSlug) {
       return NextResponse.json(
-        { error: "No post ID provided." },
+        { error: "No post slug provided." },
         { status: 400 }
       );
     }
     // First update the post object in database
     await connectToDatabase();
-    const post = await Post.findById(postId);
+    const post = await Post.findOne({ slug: postSlug });
     if (!post) {
       throw new Error("There's not any results to return.");
     }
@@ -31,7 +31,7 @@ export async function POST(req: Request) {
       "uploads",
       "files",
       "posts",
-      postId
+      postSlug
     );
     const files = fs.readdirSync(filesDir);
     const matchingFiles = files.filter((file) => file === fileName);
