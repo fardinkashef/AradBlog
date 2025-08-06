@@ -81,14 +81,14 @@ export async function getPostBySlug(slug: string): Promise<post> {
 }
 
 export async function createPost(title: string): Promise<{
-  newPostId: string;
+  newPostSlug: string;
 }> {
   try {
     await connectToDatabase();
     const slug = generateSlug(title);
     const newPost = new Post({ title, slug });
     await newPost.save();
-    return { newPostId: newPost._id.toString() };
+    return { newPostSlug: slug };
     // revalidatePath("/data");
   } catch (error) {
     console.log("This error happened while creating new data:", error);

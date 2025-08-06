@@ -37,7 +37,7 @@ export default function CreatePostForm() {
     try {
       const response = await createPost(data.title);
       toast.success("Post created");
-      router.push(`/admin/posts/${response.newPostId}`);
+      router.push(`/admin/posts/${response.newPostSlug}`);
     } catch (error) {
       toast.error("Something went wrong");
       console.log(error);
