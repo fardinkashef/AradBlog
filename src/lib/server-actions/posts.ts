@@ -6,18 +6,19 @@ import { post } from "../types";
 import { generateSlug, getReadTime } from "../utils/posts";
 // import { revalidatePath } from "next/cache";
 
-export async function getAllPosts(): Promise<post[]> {
+export async function getAllPosts() {
   try {
     await connectToDatabase();
-    const posts = (await Post.find().lean()) as post[];
-    if (!posts) {
-      throw new Error("There's not any results to return.");
-    }
+    const posts = await Post.find().lean();
+    // const p = posts[0]._id;
     // * If you only need to retrieve SOME properties of post objects from DB, this is how you can type the data in TypeScript. Pick<Type, Keys> is a built-in utility type in TypeScript that allows you to create a new type by selecting a set of properties from an existing type.
     // type PostTitleAndDescription = Pick<Post, 'title' | 'description'>;
     return posts;
   } catch (error) {
-    console.log("This error happened when getting all the posts:", error);
+    // THIS LINE: Logs the error for debugging.
+    console.error("This error happened when getting all the posts:", error);
+    // THIS LINE: Stops execution and triggers Next.js's error handling.
+    // It's the correct user-facing behavior for a server-side failure.
     throw error;
   }
 }

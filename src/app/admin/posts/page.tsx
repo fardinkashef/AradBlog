@@ -22,7 +22,7 @@ export default async function PostsPage() {
       </div>
       <ul className="flex flex-col gap-3">
         {posts.map((post) => (
-          <li key={post._id}>
+          <li key={post._id.toString()}>
             <Link href={`/admin/posts/${post.slug}`}>
               <PostItem
                 title={post.title}
