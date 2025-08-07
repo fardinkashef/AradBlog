@@ -75,7 +75,7 @@ export default function ServicesSection() {
           </div>
         </div>
         <div className="flex justify-end">
-          <Link href="/about">
+          <Link href="/services">
             <Button variant="outline" size="lg" className="text-lg">
               More about our services <ArrowRight />
             </Button>
