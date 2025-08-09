@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import { connectToDatabase } from "@/lib/database/db-connection";
 import Post from "@/lib/database/models/Post";
+import { revalidatePath } from "next/cache";
 
 export async function POST(req: Request) {
   try {
@@ -42,14 +43,12 @@ export async function POST(req: Request) {
       (file) => path.parse(file).name === postSlug
     );
 
-    if (matchingFiles.length === 0) {
-      return NextResponse.json({ message: "No matching images found." });
-    }
-
     matchingFiles.forEach((file) => {
       const filePath = path.join(imagesDir, file);
       fs.unlinkSync(filePath);
     });
+
+    revalidatePath("/admin/posts");
 
     return NextResponse.json({
       message: "Deleted the post in DB and related images in file system",

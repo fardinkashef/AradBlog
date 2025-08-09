@@ -4,6 +4,7 @@ import { connectToDatabase } from "@/lib/database/db-connection";
 import Post from "../database/models/Post";
 import { post } from "../types";
 import { generateSlug, getReadTime } from "../utils/posts";
+import { revalidatePath } from "next/cache";
 // import { revalidatePath } from "next/cache";
 
 export async function getAllPosts() {
@@ -75,7 +76,10 @@ export async function getPostBySlug(slug: string): Promise<post> {
     return JSON.parse(JSON.stringify(post));
     // return post;
   } catch (error) {
-    console.log("This error happened when getting the post by its id:", error);
+    console.log(
+      "This error happened when getting the post by its slug:",
+      error
+    );
     throw error;
   }
 }
@@ -88,6 +92,7 @@ export async function createPost(title: string): Promise<{
     const slug = generateSlug(title);
     const newPost = new Post({ title, slug });
     await newPost.save();
+    revalidatePath("/admin/posts");
     return { newPostSlug: slug };
     // revalidatePath("/data");
   } catch (error) {

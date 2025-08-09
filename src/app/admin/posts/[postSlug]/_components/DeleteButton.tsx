@@ -18,15 +18,22 @@ export default function DeleteButton({ postSlug }: { postSlug: string }) {
   const router = useRouter();
   const handleDeletePost = async () => {
     try {
-      await fetch("/api/posts/delete-post", {
+      const res = await fetch("/api/posts/delete-post", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ postSlug }),
       });
-      toast.success("Post deleted successfully");
-      router.push("/admin/posts");
+      // await fetch("/api/posts/test", {
+      //   method: "POST",
+      // });
+      if (res.ok) {
+        toast.success("Post deleted successfully");
+        router.push("/admin/posts");
+        // *This router.refresh() will be applied to the new url of "/admin/posts"
+        router.refresh();
+      }
     } catch (error) {
       console.log("This error happend while deleting the post:", error);
       toast.error("An error happened while deleting the post");
