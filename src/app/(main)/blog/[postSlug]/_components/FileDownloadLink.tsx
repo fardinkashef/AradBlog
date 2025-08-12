@@ -11,7 +11,10 @@ export default function FileDownloadLink({
   fileName,
 }: FileDownloadLinkProps) {
   return (
-    <a href={`/uploads/files/posts/${postSlug}/${fileName}`} download>
+    <a
+      href={`/api/posts/files/serve/uploads/files/posts/${postSlug}/${fileName}`}
+      download
+    >
       <Card className="w-fit">
         <CardContent className="flex items-center gap-5">
           <div className="flex-shrink-0">

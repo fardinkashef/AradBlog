@@ -27,7 +27,6 @@ export async function POST(req: Request) {
     // Next remove the image file(s) from server
     const filesDir = path.join(
       process.cwd(),
-      "public",
       "uploads",
       "files",
       "posts",

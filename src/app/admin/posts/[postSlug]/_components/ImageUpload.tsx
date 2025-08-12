@@ -202,7 +202,7 @@ function ImageView({
   const router = useRouter();
   const handleRemoveImage = async () => {
     try {
-      await fetch("/api/posts/delete-image", {
+      await fetch("/api/posts/images/delete", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -285,7 +285,7 @@ function ImagePreview({
     setProgress(0);
 
     try {
-      await axios.post("/api/posts/upload-image", formData, {
+      await axios.post("/api/posts/images/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

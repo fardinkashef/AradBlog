@@ -19,7 +19,6 @@ export async function POST(request: NextRequest) {
     // Create uploads directory if it doesn't exist
     const uploadsDir = path.join(
       process.cwd(),
-      "public",
       "uploads",
       "files",
       "posts",

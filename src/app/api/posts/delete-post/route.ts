@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
-import fs from "fs";
+import fs, { existsSync } from "fs";
 import path from "path";
 import { connectToDatabase } from "@/lib/database/db-connection";
 import Post from "@/lib/database/models/Post";
 import { revalidatePath } from "next/cache";
+import { rm } from "fs/promises";
 
 export async function POST(req: Request) {
   try {
@@ -31,13 +32,7 @@ export async function POST(req: Request) {
       throw error;
     }
     // Next remove the image file(s) from server
-    const imagesDir = path.join(
-      process.cwd(),
-      "public",
-      "uploads",
-      "images",
-      "posts"
-    );
+    const imagesDir = path.join(process.cwd(), "uploads", "images", "posts");
     const files = fs.readdirSync(imagesDir);
     const matchingFiles = files.filter(
       (file) => path.parse(file).name === postSlug
@@ -48,6 +43,17 @@ export async function POST(req: Request) {
       fs.unlinkSync(filePath);
     });
 
+    // Next remove the attachment files from server
+    const filesDir = path.join(
+      process.cwd(),
+      "uploads",
+      "files",
+      "posts",
+      postSlug
+    );
+    if (existsSync(filesDir)) {
+      await rm(filesDir, { recursive: true, force: true });
+    }
     revalidatePath("/admin/posts");
 
     return NextResponse.json({
