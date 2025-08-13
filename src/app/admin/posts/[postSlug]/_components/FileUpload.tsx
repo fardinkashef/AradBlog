@@ -24,7 +24,7 @@ export default function FileUpload({ attachments, postSlug }: FileUploadProps) {
   // Removes a file from the server. In other words, removes a file from previously uploaded files.
   const handleRemoveFile = async (fileName: string) => {
     try {
-      await fetch("/api/posts/files/delete", {
+      await fetch("/api/posts/attachments/delete", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -63,7 +63,7 @@ export default function FileUpload({ attachments, postSlug }: FileUploadProps) {
     setProgress(0);
 
     try {
-      await axios.post("/api/posts/files/upload", formData, {
+      await axios.post("/api/posts/attachments/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

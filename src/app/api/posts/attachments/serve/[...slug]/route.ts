@@ -6,10 +6,11 @@ import mime from "mime-types";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { slug: string[] } }
+  { params }: { params: Promise<{ slug: string[] }> }
 ) {
+  const { slug } = await params;
   try {
-    const filePath = path.join(process.cwd(), ...params.slug);
+    const filePath = path.join(process.cwd(), "uploads", "posts", ...slug);
 
     if (!existsSync(filePath)) {
       return new NextResponse("Not Found", { status: 404 });

@@ -12,7 +12,7 @@ export default function FileDownloadLink({
 }: FileDownloadLinkProps) {
   return (
     <a
-      href={`/api/posts/files/serve/uploads/files/posts/${postSlug}/${fileName}`}
+      href={`/api/posts/attachments/serve/${postSlug}/attachments/${fileName}`}
       download
     >
       <Card className="w-fit">

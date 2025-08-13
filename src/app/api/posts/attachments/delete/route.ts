@@ -24,15 +24,15 @@ export async function POST(req: Request) {
       (attachment: string) => attachment !== fileName
     );
     await post.save();
-    // Next remove the image file(s) from server
-    const filesDir = path.join(
+    // Next remove the attachment file from server
+    const fileDir = path.join(
       process.cwd(),
       "uploads",
-      "files",
       "posts",
-      postSlug
+      postSlug,
+      "attachments"
     );
-    const files = fs.readdirSync(filesDir);
+    const files = fs.readdirSync(fileDir);
     const matchingFiles = files.filter((file) => file === fileName);
 
     if (matchingFiles.length === 0) {
@@ -40,7 +40,7 @@ export async function POST(req: Request) {
     }
 
     matchingFiles.forEach((file) => {
-      const filePath = path.join(filesDir, file);
+      const filePath = path.join(fileDir, file);
       fs.unlinkSync(filePath);
     });
 

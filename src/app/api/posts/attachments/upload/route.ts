@@ -20,9 +20,9 @@ export async function POST(request: NextRequest) {
     const uploadsDir = path.join(
       process.cwd(),
       "uploads",
-      "files",
       "posts",
-      postSlug
+      postSlug,
+      "attachments"
     );
     if (!existsSync(uploadsDir)) {
       await mkdir(uploadsDir, { recursive: true });

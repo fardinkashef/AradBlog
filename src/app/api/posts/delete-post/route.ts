@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import fs, { existsSync } from "fs";
+import { existsSync } from "fs";
 import path from "path";
 import { connectToDatabase } from "@/lib/database/db-connection";
 import Post from "@/lib/database/models/Post";
@@ -31,26 +31,8 @@ export async function POST(req: Request) {
       );
       throw error;
     }
-    // Next remove the image file(s) from server
-    const imagesDir = path.join(process.cwd(), "uploads", "images", "posts");
-    const files = fs.readdirSync(imagesDir);
-    const matchingFiles = files.filter(
-      (file) => path.parse(file).name === postSlug
-    );
-
-    matchingFiles.forEach((file) => {
-      const filePath = path.join(imagesDir, file);
-      fs.unlinkSync(filePath);
-    });
-
-    // Next remove the attachment files from server
-    const filesDir = path.join(
-      process.cwd(),
-      "uploads",
-      "files",
-      "posts",
-      postSlug
-    );
+    // Next remove all the related files (image and attachments) from server
+    const filesDir = path.join(process.cwd(), "uploads", "posts", postSlug);
     if (existsSync(filesDir)) {
       await rm(filesDir, { recursive: true, force: true });
     }

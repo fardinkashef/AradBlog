@@ -8,10 +8,10 @@ import Post from "@/lib/database/models/Post";
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
-    const file = formData.get("image") as File;
+    const image = formData.get("image") as File;
     const postSlug = formData.get("postSlug") as string;
 
-    if (!file) {
+    if (!image) {
       return NextResponse.json(
         { error: "No image file provided" },
         { status: 400 }
@@ -22,24 +22,24 @@ export async function POST(request: NextRequest) {
     const uploadsDir = path.join(
       process.cwd(),
       "uploads", // Store in a dedicated 'uploads' folder
-      "images",
-      "posts"
+      "posts",
+      postSlug
     );
 
     if (!existsSync(uploadsDir)) {
       await mkdir(uploadsDir, { recursive: true });
     }
 
-    const fileExtension = path.extname(file.name);
-    const newFilename = `${postSlug}${fileExtension}`;
+    const imageExtension = path.extname(image.name);
+    const newImageName = `Image${imageExtension}`;
 
-    const finalPath = path.join(uploadsDir, newFilename);
+    const finalPath = path.join(uploadsDir, newImageName);
 
-    const bytes = await file.arrayBuffer();
+    const bytes = await image.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
     await writeFile(finalPath, buffer);
-    const imageSrc = `/api/posts/images/serve/uploads/images/posts/${newFilename}`;
+    const imageSrc = `/api/posts/images/serve/${postSlug}/${newImageName}`;
 
     await connectToDatabase();
     const post = await Post.findOne({ slug: postSlug });
@@ -54,8 +54,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       imageSrc: imageSrc,
-      filename: newFilename,
-      size: file.size,
+      imageName: newImageName,
+      size: image.size,
     });
   } catch (error) {
     console.error("Upload error:", error);

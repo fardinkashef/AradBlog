@@ -23,10 +23,10 @@ export async function POST(req: Request) {
     post.imageSrc = "";
     await post.save();
     // Next remove the image file(s) from server
-    const imagesDir = path.join(process.cwd(), "uploads", "images", "posts");
+    const imagesDir = path.join(process.cwd(), "uploads", "posts", postSlug);
     const files = fs.readdirSync(imagesDir);
     const matchingFiles = files.filter(
-      (file) => path.parse(file).name === postSlug
+      (file) => path.parse(file).name === "Image"
     );
 
     if (matchingFiles.length === 0) {
