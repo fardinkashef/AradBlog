@@ -8,9 +8,9 @@ import { rm } from "fs/promises";
 
 export async function POST(req: Request) {
   try {
-    const { postSlug } = await req.json();
+    const { postId } = await req.json();
 
-    if (!postSlug) {
+    if (!postId) {
       return NextResponse.json(
         { error: "No post slug provided." },
         { status: 400 }
@@ -18,7 +18,7 @@ export async function POST(req: Request) {
     }
     // First delete the post object in database
     await connectToDatabase();
-    const post = await Post.findOne({ slug: postSlug });
+    const post = await Post.findById(postId);
     if (!post) {
       throw new Error("There's not any results to return.");
     }
@@ -32,7 +32,7 @@ export async function POST(req: Request) {
       throw error;
     }
     // Next remove all the related files (image and attachments) from server
-    const filesDir = path.join(process.cwd(), "uploads", "posts", postSlug);
+    const filesDir = path.join(process.cwd(), "uploads", "posts", postId);
     if (existsSync(filesDir)) {
       await rm(filesDir, { recursive: true, force: true });
     }

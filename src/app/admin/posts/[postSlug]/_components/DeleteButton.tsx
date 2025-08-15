@@ -14,7 +14,7 @@ import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
-export default function DeleteButton({ postSlug }: { postSlug: string }) {
+export default function DeleteButton({ postId }: { postId: string }) {
   const router = useRouter();
   const handleDeletePost = async () => {
     try {
@@ -23,7 +23,7 @@ export default function DeleteButton({ postSlug }: { postSlug: string }) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ postSlug }),
+        body: JSON.stringify({ postId }),
       });
       // await fetch("/api/posts/test", {
       //   method: "POST",

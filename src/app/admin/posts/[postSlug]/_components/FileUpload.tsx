@@ -10,10 +10,10 @@ import toast from "react-hot-toast";
 
 type FileUploadProps = {
   attachments: string[]; // The names of the attached files(.e.g ['article.pdf' , 'photo.jpg'])
-  postSlug: string;
+  postId: string;
 };
 
-export default function FileUpload({ attachments, postSlug }: FileUploadProps) {
+export default function FileUpload({ attachments, postId }: FileUploadProps) {
   const [files, setFiles] = useState<File[]>([]);
   const [isAdding, setIsAdding] = useState(false); // Adding a new file
   const [progress, setProgress] = useState<number>(0);
@@ -29,7 +29,7 @@ export default function FileUpload({ attachments, postSlug }: FileUploadProps) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ postSlug, fileName }),
+        body: JSON.stringify({ postId, fileName }),
       });
       toast.success("File deleted successfully");
       router.refresh();
@@ -58,7 +58,7 @@ export default function FileUpload({ attachments, postSlug }: FileUploadProps) {
     // Create form data
     const formData = new FormData();
     files.forEach((file: File) => formData.append("files", file));
-    formData.append("postSlug", postSlug);
+    formData.append("postId", postId);
     setUploading(true);
     setProgress(0);
 

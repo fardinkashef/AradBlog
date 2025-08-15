@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
     const image = formData.get("image") as File;
-    const postSlug = formData.get("postSlug") as string;
+    const postId = formData.get("postId") as string;
 
     if (!image) {
       return NextResponse.json(
@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
       process.cwd(),
       "uploads", // Store in a dedicated 'uploads' folder
       "posts",
-      postSlug
+      postId
     );
 
     if (!existsSync(uploadsDir)) {
@@ -39,10 +39,10 @@ export async function POST(request: NextRequest) {
     const buffer = Buffer.from(bytes);
 
     await writeFile(finalPath, buffer);
-    const imageSrc = `/api/posts/images/serve/${postSlug}/${newImageName}`;
+    const imageSrc = `/api/posts/images/serve/${postId}/${newImageName}`;
 
     await connectToDatabase();
-    const post = await Post.findOne({ slug: postSlug });
+    const post = await Post.findById(postId);
     if (!post) {
       // It's better to return an error than to throw it here
       return NextResponse.json({ error: "Post not found" }, { status: 404 });

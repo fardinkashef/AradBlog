@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
     const files = formData.getAll("files"); // This will be an array of File objects
-    const postSlug = formData.get("postSlug") as string;
+    const postId = formData.get("postId") as string;
 
     // Corrected check: if no files were actually provided
     if (files.length === 0) {
@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
       process.cwd(),
       "uploads",
       "posts",
-      postSlug,
+      postId,
       "attachments"
     );
     if (!existsSync(uploadsDir)) {
@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
 
     // Update the post object in database
     await connectToDatabase();
-    const post = await Post.findOne({ slug: postSlug });
+    const post = await Post.findById(postId);
     if (!post) {
       // You might want to handle this more gracefully, e.g., delete uploaded files
       throw new Error("There's not any results to return.");

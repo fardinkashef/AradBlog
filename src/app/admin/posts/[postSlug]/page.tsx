@@ -30,7 +30,7 @@ export default async function PostPage({ params }: PostPageProps) {
           Manage your post
         </h1>
         <div className="flex gap-3">
-          <DeleteButton postSlug={postSlug} />
+          <DeleteButton postId={post._id.toString()} />
           <Link
             href={`/admin/posts/${postSlug}/preview`}
             target="_blank"
@@ -46,8 +46,8 @@ export default async function PostPage({ params }: PostPageProps) {
       </div>
       <TitleForm initialTitle={post.title} postSlug={postSlug} />
       <ExcerptForm initialExcerpt={post.excerpt || ""} postSlug={postSlug} />
-      <ImageUpload imageSrc={post.imageSrc} postSlug={postSlug} />
-      <FileUpload attachments={post.attachments} postSlug={postSlug} />
+      <ImageUpload imageSrc={post.imageSrc} postId={post._id.toString()} />
+      <FileUpload attachments={post.attachments} postId={post._id.toString()} />
       <ContentForm initialContent={post.content || ""} postSlug={postSlug} />
       <YouTubeVideoInput
         youtubeVideoId={post.youtubeVideoId}

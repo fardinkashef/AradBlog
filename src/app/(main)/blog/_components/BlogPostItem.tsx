@@ -34,7 +34,7 @@ export default function BlogPostItem({
 
         {/* Metadata */}
         <div className="flex items-center gap-6 text-sm text-gray-500">
-          <div className="flex items-center gap-1 w-24">
+          <div className="flex items-center gap-1 w-28">
             <div className="w-3 h-3 bg-orange-400 rotate-45"></div>
             <span>{formatPostDate(createdAt)}</span>
           </div>
