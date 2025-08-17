@@ -5,7 +5,6 @@ import Post from "../database/models/Post";
 import { post } from "../types";
 import { generateSlug, getReadTime } from "../utils/posts";
 import { revalidatePath } from "next/cache";
-// import { revalidatePath } from "next/cache";
 
 export async function getAllPosts() {
   try {
@@ -93,8 +92,8 @@ export async function createPost(title: string): Promise<{
     const newPost = new Post({ title, slug });
     await newPost.save();
     revalidatePath("/admin/posts");
+    // We don't need to revalidate "/blog" path here because when admin creates a new post, he has to press the publish button to share the post, and in publish server action, we have the revalidation of "/blog"
     return { newPostSlug: slug };
-    // revalidatePath("/data");
   } catch (error) {
     console.log("This error happened while creating new data:", error);
     throw error;
@@ -137,6 +136,8 @@ export async function updatePostTitle(postSlug: string, newTitle: string) {
   try {
     post.title = newTitle;
     await post.save();
+    revalidatePath("/admin/posts");
+    revalidatePath("/blog");
   } catch (error) {
     console.log("This error happened while updating the data:", error);
     throw error;
@@ -210,6 +211,7 @@ export async function updatePostPublishStatus(
   try {
     post.isPublished = publishStatus;
     await post.save();
+    revalidatePath("/blog");
   } catch (error) {
     console.log("This error happened while updating the data:", error);
     throw error;

@@ -27,7 +27,7 @@ export default function StaffCard({
           </CardTitle>
         </CardHeader>
         <CardContent className="text-center space-y-6">
-          <div className="relative w-60 h-60 mx-auto">
+          <div className="relative w-64 h-64 mx-auto">
             <Image
               src={image}
               alt={position}

@@ -17,7 +17,7 @@ const staff = [
     name: "Hedyeh Rostamian",
     tel: "+98 917 775 5120",
     email: "hedyeh@oceanarktech.com",
-    image: "/staff/Arad.jpg",
+    image: "/staff/Hedyeh.jpg",
   },
   {
     position: "Commercial Manager",

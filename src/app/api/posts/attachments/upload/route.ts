@@ -8,7 +8,7 @@ import Post from "@/lib/database/models/Post";
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
-    const files = formData.getAll("files"); // This will be an array of File objects
+    const files = formData.getAll("files") as File[]; // This will be an array of File objects
     const postId = formData.get("postId") as string;
 
     // Corrected check: if no files were actually provided
