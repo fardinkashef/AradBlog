@@ -57,7 +57,7 @@ export default function ContentForm({
           </div>
         ) : (
           <div
-            className="p-3 max-w-2xl mx-auto w-full post-content"
+            className="ql-editor post-content p-3 max-w-2xl mx-auto w-full"
             dangerouslySetInnerHTML={{ __html: value }}
           ></div>
         )}

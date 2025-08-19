@@ -33,7 +33,7 @@ export async function getPostViews(postSlug: string): Promise<number> {
         },
       },
     });
-    console.log("this is theeeee response:", response);
+    // console.log("this is theeeee response:", response);
 
     let views = 0;
     if (response.rows && response.rows.length > 0) {

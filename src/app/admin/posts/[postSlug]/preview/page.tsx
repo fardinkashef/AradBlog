@@ -6,6 +6,7 @@ import FileDownloadLink from "./_components/FileDownloadLink";
 import { getPostViews } from "@/lib/server-actions/views";
 import { formatPostDate } from "@/lib/utils/posts";
 import { Eye } from "lucide-react";
+import "react-quill-new/dist/quill.snow.css";
 
 type BlogPostPageProps = {
   params: Promise<{ postSlug: string }>;
@@ -36,10 +37,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </div>
       )}
 
-      <div
-        className="my-3 max-w-2xl mx-auto w-full post-content"
-        dangerouslySetInnerHTML={{ __html: post?.content }}
-      ></div>
+      {post.content && (
+        <div
+          className="ql-editor post-content my-3 max-w-2xl mx-auto w-full"
+          dangerouslySetInnerHTML={{ __html: post.content }}
+        ></div>
+      )}
       {post.attachments.length > 0 && (
         <div className="flex flex-wrap gap-4 my-8">
           {post.attachments.map((attachment) => (
